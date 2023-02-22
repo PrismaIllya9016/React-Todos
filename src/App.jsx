@@ -43,6 +43,14 @@ function App() {
     setItems(newArray);
   }
 
+  function handleClickDone(id, status) {
+    setItems((oldTasks) =>
+      oldTasks.map((item) =>
+        item.id === id ? { ...item, status: !status } : item
+      )
+    );
+  }
+
   return (
     <div className="App">
       {/*1 Header */}
@@ -69,10 +77,20 @@ function App() {
             <li key={item.id}>
               {item.value}{" "}
               <button
+                onClick={() => handleClickDone(item.id,item.status)}
+                className="done-button"
+              >
+                {item.status ? (
+                  <i className="fa-regular fa-square-check"></i>  //Icono de completada
+                ) : (
+                  <i className="fa-regular fa-square"></i> //Icono de pendientes
+                )}
+              </button>
+              <button
                 className="delete-button"
                 onClick={() => deleteTask(item.id)}
               >
-                <i class="fa-thin fa-x"></i>
+                <i className="fa-solid fa-trash-can"></i>
               </button>
             </li>
           );
